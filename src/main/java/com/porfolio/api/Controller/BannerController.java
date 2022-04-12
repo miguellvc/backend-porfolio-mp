@@ -1,26 +1,47 @@
 package com.porfolio.api.Controller;
 
 
-import com.porfolio.api.Models.User;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.porfolio.api.Dao.BannerInterfaceDao;
+import com.porfolio.api.Models.Banner;
+import com.porfolio.api.Util.JWTUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class BannerController {
 
-    @RequestMapping(value = "api/banner", method = RequestMethod.GET)
-    public List<String> getBanner() {
+    @Autowired
+    private BannerInterfaceDao BannerInterfaceDao;
+    @Autowired
+    private JWTUtil jwtUtil;
 
-        return List.of("Método get banner");
+    @RequestMapping(value = "api/banner", method = RequestMethod.GET)
+    public List<Banner> getBanners() {
+        return BannerInterfaceDao.getBanners();
+    }
+
+    @RequestMapping(value = "api/banner/{id}", method = RequestMethod.GET)
+    public Banner getBanner(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
+
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+
+        return BannerInterfaceDao.getBanner(id);
     }
 
     @RequestMapping(value = "api/banner", method = RequestMethod.POST)
-    public List<String> newBanner() {
+    public Banner newBanner(@RequestHeader(value="x-token") String x_token, @RequestBody Banner banner ) {
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
 
-        return List.of("Método añadir un banner");
+        Banner bannerDB = BannerInterfaceDao.newBanner(banner);
+
+        if(banner != null){
+               return bannerDB;
+        }else {
+            return null;
+        }
+
     }
 
     @RequestMapping(value = "api/banner", method = RequestMethod.PUT)
@@ -28,9 +49,18 @@ public class BannerController {
         return List.of("Método para modificar banner");
     }
 
-    @RequestMapping(value = "api/banner", method = RequestMethod.DELETE)
-    public List<String> deleteBanner() {
-        return List.of("Método para eliminar banner");
+    @RequestMapping(value = "api/banner/{id}", method = RequestMethod.DELETE)
+    public List<String> deleteBanner(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
+
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+         String res;
+
+         if(BannerInterfaceDao.deleteBaner(id)) {
+             res = "ok";
+         }else {
+             res = "error";
+         }
+        return List.of(res);
     }
 
 }

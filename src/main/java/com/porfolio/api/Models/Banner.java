@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "banner")
-public class banner implements Serializable{
+public class Banner implements Serializable{
 
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -22,8 +22,8 @@ public class banner implements Serializable{
     @Getter @Setter @Column(name = "content")
     private String content;
 
-    @Getter @Setter @Column(name = "urlImg")
-    private String urlImg;
+    @Getter @Setter @Column(name = "url_img")
+    private String url_Img;
 
 
 }

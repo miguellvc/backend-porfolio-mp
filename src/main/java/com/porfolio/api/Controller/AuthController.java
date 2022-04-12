@@ -27,7 +27,7 @@ public class AuthController {
         User userLogin = userInterfaceDao.getUserMail(user);
 
         if (userLogin != null) {
-            String tokenJwt = jwtUtil.create(String.valueOf(userLogin.getId()), userLogin.getMail());
+            String tokenJwt = jwtUtil.create(String.valueOf(userLogin.getId()), userLogin.getName());
             return List.of(tokenJwt);
         }
         return null;
