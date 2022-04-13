@@ -1,9 +1,12 @@
 package com.porfolio.api.Controller;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.porfolio.api.Dao.EducationInterfaceDao;
+import com.porfolio.api.Models.Education;
+import com.porfolio.api.Util.JWTUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+
 
 import java.util.List;
 
@@ -11,24 +14,37 @@ import java.util.List;
 
 public class EducationController {
 
+    @Autowired
+    private EducationInterfaceDao educationInterfaceDao;
+
+    @Autowired
+    private JWTUtil jwtUtil;
 
     @RequestMapping(value = "api/education", method = RequestMethod.GET)
-    public List<String> getAllEducation() {
+    public List<Education> getAllEducation() {
 
-        return List.of("Método mostrar all Educación");
+        return educationInterfaceDao.getEducations();
     }
 
     @RequestMapping(value = "api/education/{id}", method = RequestMethod.GET)
-    public List<String> getEducation(@PathVariable Long id) {
+    public Education getEducation(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
 
-        return List.of("Método get Educación", String.valueOf(id));
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+        return educationInterfaceDao.getEducation(id);
     }
 
 
     @RequestMapping(value = "api/education", method = RequestMethod.POST)
-    public List<String> newEducación() {
+    public Education newEducación(@RequestHeader(value="x-token") String x_token, @RequestBody Education education) {
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
 
-        return List.of("Método añadir un educación");
+        Education educationDB = educationInterfaceDao.newEducation(education);
+
+        if(educationDB != null) {
+
+            return educationDB;
+        }
+        return null;
     }
 
     @RequestMapping(value = "api/education", method = RequestMethod.PUT)
@@ -36,9 +52,15 @@ public class EducationController {
         return List.of("Método para modificar educación");
     }
 
-    @RequestMapping(value = "api/education", method = RequestMethod.DELETE)
-    public List<String> deleteEducación() {
-        return List.of("Método para eliminar educación");
+    @RequestMapping(value = "api/education/{id}", method = RequestMethod.DELETE)
+    public List<String> deleteEducación(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+        String res;
+
+        if(educationInterfaceDao.deleteEducation(id)) {
+            return List.of("ok");
+        }
+        return List.of("error");
     }
 
 }

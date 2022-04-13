@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+
 public class BannerController {
 
     @Autowired
@@ -19,6 +20,7 @@ public class BannerController {
 
     @RequestMapping(value = "api/banner", method = RequestMethod.GET)
     public List<Banner> getBanners() {
+
         return BannerInterfaceDao.getBanners();
     }
 
@@ -38,9 +40,8 @@ public class BannerController {
 
         if(banner != null){
                return bannerDB;
-        }else {
-            return null;
         }
+        return null;
 
     }
 
