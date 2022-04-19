@@ -19,6 +19,9 @@ public class Banner implements Serializable{
     @Getter @Setter @Column(name = "title")
     private String title;
 
+    @Getter @Setter @Column(name = "sub_title")
+    private String sub_Title;
+
     @Getter @Setter @Column(name = "content")
     private String content;
 

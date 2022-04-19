@@ -19,10 +19,10 @@ public class Project implements Serializable{
     @Getter @Setter @Column(name = "title")
     private String title;
 
-    @Getter @Setter @Column(name = "urlImg")
-    private String urlImg;
+    @Getter @Setter @Column(name = "url_Img")
+    private String url_Img;
 
-    @Getter @Setter @Column(name = "urlGit")
-    private String urlGit;
+    @Getter @Setter @Column(name = "url_Git")
+    private String url_Git;
 
 }

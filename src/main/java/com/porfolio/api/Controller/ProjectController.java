@@ -1,33 +1,49 @@
 package com.porfolio.api.Controller;
 
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import com.porfolio.api.Dao.ProjectInterfaceDao;
+import com.porfolio.api.Models.Project;
+import com.porfolio.api.Util.JWTUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class ProjectController {
 
-    @RequestMapping(value = "api/project", method = RequestMethod.GET)
-    public List<String> getAllProject() {
+    @Autowired
+    private ProjectInterfaceDao projectInterfaceDao;
 
-        return List.of("Método mostrar all project");
+    @Autowired
+    private JWTUtil jwtUtil;
+
+    @RequestMapping(value = "api/project", method = RequestMethod.GET)
+    public List<Project> getAllProject() {
+        return projectInterfaceDao.getProjects();
     }
 
     @RequestMapping(value = "api/project/{id}", method = RequestMethod.GET)
-    public List<String> getProject(@PathVariable Long id) {
+    public Project getProject(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
 
-        return List.of("Método get project", String.valueOf(id));
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+
+        return projectInterfaceDao.getProject(id);
+
     }
 
 
     @RequestMapping(value = "api/project", method = RequestMethod.POST)
-    public List<String> newProject() {
+    public Project newProject(@RequestHeader(value="x-token") String x_token, @RequestBody Project project) {
 
-        return List.of("Método añadir un project");
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+
+        Project projectDB = projectInterfaceDao.newProject(project);
+
+        if(projectDB !=null) {
+            return projectDB;
+        }
+        return null;
     }
 
     @RequestMapping(value = "api/project", method = RequestMethod.PUT)
@@ -35,9 +51,18 @@ public class ProjectController {
         return List.of("Método para modificar project");
     }
 
-    @RequestMapping(value = "api/project", method = RequestMethod.DELETE)
-    public List<String> deleteProject() {
-        return List.of("Método para eliminar project");
+    @RequestMapping(value = "api/project/{id}", method = RequestMethod.DELETE)
+    public List<String> deleteProject(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+        String res;
+
+        if(projectInterfaceDao.deleteProject(id)){
+            res = "ok";
+        }else{
+            res = "error";
+        }
+
+        return List.of(res);
     }
 
 }
