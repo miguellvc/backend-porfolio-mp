@@ -5,10 +5,7 @@ import com.porfolio.api.Dao.UserInterfaceDao;
 import com.porfolio.api.Models.User;
 import com.porfolio.api.Util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +28,18 @@ public class AuthController {
             return List.of(tokenJwt);
         }
         return null;
+    }
+
+    @RequestMapping(value = "api/token", method = RequestMethod.GET)
+
+    public boolean verifyToken(@RequestHeader(value="x-token") String x_token) {
+
+        try {
+            return jwtUtil.getValue(x_token)!=null;
+        }catch (Exception e) {
+            return false;
+        }
 
     }
+
 }

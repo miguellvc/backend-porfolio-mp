@@ -21,13 +21,13 @@ public class Skill implements Serializable{
     private String language;
 
     @Getter @Setter @Column(name = "porcentage")
-    private String porcentage;
+    private Long porcentage;
 
-    @Getter @Setter @Column(name = "colorBackground")
-    private String colorBackground;
+    @Getter @Setter @Column(name = "background")
+    private String background;
 
-    @Getter @Setter @Column(name = "colorBorder")
-    private String colorBorder;
+    @Getter @Setter @Column(name = "border")
+    private String border;
 
     @Getter @Setter @Column(name = "color")
     private String color;

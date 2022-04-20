@@ -1,5 +1,9 @@
 package com.porfolio.api.Controller;
 
+import com.porfolio.api.Dao.SkillInterfaceDao;
+import com.porfolio.api.Models.Skill;
+import com.porfolio.api.Util.JWTUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,11 +15,13 @@ import java.util.List;
 
 public class SkillController {
 
-    @RequestMapping(value = "api/skill", method = RequestMethod.GET)
-    public List<String> getAllSkill() {
+    @Autowired
+    private SkillInterfaceDao skillInterfaceDao;
 
-        return List.of("Método mostrar all skill");
-    }
+    private JWTUtil jwtUtil;
+
+    @RequestMapping(value = "api/skill", method = RequestMethod.GET)
+    public List<Skill> getAllSkill() { return skillInterfaceDao.getSkills(); }
 
     @RequestMapping(value = "api/skill/{id}", method = RequestMethod.GET)
     public List<String> getSkill(@PathVariable Long id) {
