@@ -38,7 +38,7 @@ public class BannerController {
 
         Banner bannerDB = BannerInterfaceDao.newBanner(banner);
 
-        if(banner != null){
+        if(bannerDB != null){
                return bannerDB;
         }
         return null;

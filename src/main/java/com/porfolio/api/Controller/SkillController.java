@@ -4,10 +4,7 @@ import com.porfolio.api.Dao.SkillInterfaceDao;
 import com.porfolio.api.Models.Skill;
 import com.porfolio.api.Util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -18,22 +15,32 @@ public class SkillController {
     @Autowired
     private SkillInterfaceDao skillInterfaceDao;
 
+    @Autowired
     private JWTUtil jwtUtil;
 
     @RequestMapping(value = "api/skill", method = RequestMethod.GET)
     public List<Skill> getAllSkill() { return skillInterfaceDao.getSkills(); }
 
     @RequestMapping(value = "api/skill/{id}", method = RequestMethod.GET)
-    public List<String> getSkill(@PathVariable Long id) {
+    public List<Number> getSkill(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
 
-        return List.of("Método get skill", String.valueOf(id));
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+        return List.of(id);
     }
 
 
     @RequestMapping(value = "api/skill", method = RequestMethod.POST)
-    public List<String> newSkill() {
+    public Skill newSkill(@RequestHeader(value="x-token") String x_token, @RequestBody Skill skill) {
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
 
-        return List.of("Método añadir un skill");
+        Skill skillDB = skillInterfaceDao.newSkill(skill);
+
+
+        if(skillDB != null){
+            return skillDB;
+        }
+
+        return null;
     }
 
     @RequestMapping(value = "api/skill", method = RequestMethod.PUT)
@@ -41,9 +48,18 @@ public class SkillController {
         return List.of("Método para modificar skill");
     }
 
-    @RequestMapping(value = "api/skill", method = RequestMethod.DELETE)
-    public List<String> deleteSkill() {
-        return List.of("Método para eliminar skill");
+    @RequestMapping(value = "api/skill/{id}", method = RequestMethod.DELETE)
+    public List<String> deleteSkill(@RequestHeader(value="x-token") String x_token, @PathVariable Long id ) {
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+
+        String res;
+
+        if(skillInterfaceDao.deleteSkill(id)){
+            res = "ok";
+        }else{
+            res = "error";
+        }
+        return List.of(res);
     }
 
 

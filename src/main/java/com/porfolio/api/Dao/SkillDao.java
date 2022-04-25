@@ -24,16 +24,32 @@ public class SkillDao implements SkillInterfaceDao{
 
     @Override
     public Skill getSkill(Long id) {
-        return null;
+
+        Skill skill = entityManager.find(Skill.class, id);
+        return skill;
     }
 
     @Override
-    public Skill newSkill(Skill project) {
-        return null;
+    public Skill newSkill(Skill skill) {
+
+        try {
+            Skill skillDB = entityManager.merge(skill);
+            return skillDB;
+        }catch (Exception e) {
+            return null;
+        }
+
+
     }
 
     @Override
     public boolean deleteSkill(Long id) {
-        return false;
+        try {
+                Skill skill = entityManager.find(Skill.class, id);
+                entityManager.remove(skill);
+                return true;
+        }catch (Exception e) {
+                return false;
+        }
     }
 }
