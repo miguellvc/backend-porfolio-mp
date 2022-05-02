@@ -22,10 +22,10 @@ public class SkillController {
     public List<Skill> getAllSkill() { return skillInterfaceDao.getSkills(); }
 
     @RequestMapping(value = "api/skill/{id}", method = RequestMethod.GET)
-    public List<Number> getSkill(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
+    public Skill getSkill(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
 
         if(jwtUtil.getKey(x_token) == null) { return  null; }
-        return List.of(id);
+        return skillInterfaceDao.getSkill(id);
     }
 
 
