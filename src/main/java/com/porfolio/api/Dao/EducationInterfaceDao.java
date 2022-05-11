@@ -10,5 +10,5 @@ public interface EducationInterfaceDao {
     Education getEducation(Long id);
     Education newEducation(Education education);
     boolean deleteEducation(Long id);
-
+    boolean updateEducation(Education education);
 }

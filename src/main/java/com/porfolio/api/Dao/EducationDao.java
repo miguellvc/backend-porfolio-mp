@@ -49,4 +49,21 @@ public class EducationDao implements EducationInterfaceDao{
             return false;
         }
     }
+
+    @Override
+    public boolean updateEducation(Education education) {
+
+        try{
+            Education newEducation = new Education();
+            newEducation.setId(education.getId());
+            newEducation.setCertificate(education.getCertificate());
+            newEducation.setDescription(education.getDescription());
+            newEducation.setYear(education.getYear());
+            newEducation.setColor(education.getColor());
+            entityManager.merge(education);
+            return true;
+        }catch (Exception e) {
+            return false;
+        }
+    }
 }

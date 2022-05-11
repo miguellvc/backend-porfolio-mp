@@ -47,11 +47,6 @@ public class EducationController {
         return null;
     }
 
-    @RequestMapping(value = "api/education", method = RequestMethod.PUT)
-    public List<String> editEducación() {
-        return List.of("Método para modificar educación");
-    }
-
     @RequestMapping(value = "api/education/{id}", method = RequestMethod.DELETE)
     public List<String> deleteEducación(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
         if(jwtUtil.getKey(x_token) == null) { return  null; }
@@ -61,6 +56,22 @@ public class EducationController {
             return List.of("ok");
         }
         return List.of("error");
+    }
+
+
+    @RequestMapping(value = "api/education", method = RequestMethod.PUT)
+    public List<String> updateEducación(@RequestHeader(value="x-token") String x_token, @RequestBody Education education) {
+
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+        String res;
+
+        if(educationInterfaceDao.updateEducation(education)) {
+             res = "ok";
+        }else {
+            res = "error";
+        }
+
+        return List.of(res);
     }
 
 }
