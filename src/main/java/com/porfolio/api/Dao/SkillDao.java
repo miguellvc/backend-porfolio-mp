@@ -52,4 +52,14 @@ public class SkillDao implements SkillInterfaceDao{
                 return false;
         }
     }
+
+    @Override
+    public boolean updateSkill(Skill skill) {
+
+        Skill newSkill = new Skill();
+
+        newSkill.setId(skill.getId());
+
+        return false;
+    }
 }

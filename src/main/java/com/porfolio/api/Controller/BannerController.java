@@ -45,11 +45,6 @@ public class BannerController {
 
     }
 
-    @RequestMapping(value = "api/banner", method = RequestMethod.PUT)
-    public List<String> editBanner() {
-        return List.of("Método para modificar banner");
-    }
-
     @RequestMapping(value = "api/banner/{id}", method = RequestMethod.DELETE)
     public List<String> deleteBanner(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
 
@@ -63,5 +58,20 @@ public class BannerController {
          }
         return List.of(res);
     }
+
+    @RequestMapping(value = "api/banner", method = RequestMethod.PUT)
+    public List<String> updateBanner( @RequestHeader(value="x-token") String x_token, @RequestBody Banner banner ) {
+
+       if(jwtUtil.getKey(x_token) == null) { return  null; }
+       String res;
+
+       if(BannerInterfaceDao.updateBanner(banner)){
+           res = "ok";
+       }else {
+           res = "error";
+       }
+       return List.of(res);
+    }
+
 
 }

@@ -41,12 +41,15 @@ public class BannerDao implements BannerInterfaceDao{
 
     @Override
     public Banner newBanner(Banner banner) {
+
         try{
             Banner bannerDB = entityManager.merge(banner);
             return bannerDB;
         }catch (Exception e) {
             return null;
         }
+
+
     }
 
     @Override
@@ -62,6 +65,27 @@ public class BannerDao implements BannerInterfaceDao{
             System.out.println("se ejecuta el error");
             return false;
         }
+    }
+
+    @Override
+    public boolean updateBanner(Banner banner) {
+
+        try{
+            Banner newBanner = new Banner();
+            newBanner.setId(banner.getId());
+            newBanner.setTitle(banner.getTitle());
+            newBanner.setSub_Title(banner.getSub_Title());
+            newBanner.setContent(banner.getContent());
+            newBanner.setUrl_Img(banner.getUrl_Img());
+
+            entityManager.merge(newBanner);
+
+            return true;
+        }catch (Exception e){
+
+            return false;
+        }
+
     }
 
 

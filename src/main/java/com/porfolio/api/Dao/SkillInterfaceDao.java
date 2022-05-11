@@ -9,4 +9,5 @@ public interface SkillInterfaceDao {
     Skill getSkill(Long id);
     Skill newSkill(Skill skill);
     boolean deleteSkill(Long id);
+    boolean updateSkill(Skill skill);
 }

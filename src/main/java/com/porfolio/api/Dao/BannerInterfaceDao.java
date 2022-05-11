@@ -2,6 +2,7 @@ package com.porfolio.api.Dao;
 
 import com.porfolio.api.Models.Banner;
 
+
 import java.util.List;
 
 public interface BannerInterfaceDao {
@@ -10,4 +11,5 @@ public interface BannerInterfaceDao {
     Banner getBanner(Long id);
     Banner newBanner(Banner banner);
     boolean deleteBaner(Long id);
+    boolean updateBanner(Banner banner);
 }
