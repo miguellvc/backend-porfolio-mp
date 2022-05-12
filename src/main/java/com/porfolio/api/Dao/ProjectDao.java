@@ -52,4 +52,20 @@ public class ProjectDao implements ProjectInterfaceDao{
             return false;
         }
     }
+
+    @Override
+    public boolean updataProject(Project project) {
+        try{
+
+            Project newProject = new Project();
+            newProject.setId(project.getId());
+            newProject.setTitle(project.getTitle());
+            newProject.setUrl_Img(project.getUrl_Img());
+            newProject.setUrl_Git(project.getUrl_Git());
+            entityManager.merge(newProject);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
 }

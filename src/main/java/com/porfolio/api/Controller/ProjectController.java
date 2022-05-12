@@ -46,11 +46,6 @@ public class ProjectController {
         return null;
     }
 
-    @RequestMapping(value = "api/project", method = RequestMethod.PUT)
-    public List<String> editProject() {
-        return List.of("Método para modificar project");
-    }
-
     @RequestMapping(value = "api/project/{id}", method = RequestMethod.DELETE)
     public List<String> deleteProject(@RequestHeader(value="x-token") String x_token, @PathVariable Long id) {
         if(jwtUtil.getKey(x_token) == null) { return  null; }
@@ -65,4 +60,18 @@ public class ProjectController {
         return List.of(res);
     }
 
+    @RequestMapping(value = "api/project", method = RequestMethod.PUT)
+    public List<String> updatetProject(@RequestHeader(value="x-token") String x_token, @RequestBody Project project) {
+
+        if(jwtUtil.getKey(x_token) == null) { return  null; }
+        String res;
+
+        if(projectInterfaceDao.updataProject(project)){
+            res = "ok";
+        }else{
+            res = "error";
+        }
+
+        return List.of(res);
+    }
 }

@@ -9,5 +9,5 @@ public interface ProjectInterfaceDao {
     Project getProject(Long id);
     Project newProject(Project project);
     boolean deleteProject(Long id);
-
+    boolean updataProject(Project project);
 }
