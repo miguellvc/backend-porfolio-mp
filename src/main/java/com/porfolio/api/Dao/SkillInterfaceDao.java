@@ -1,6 +1,6 @@
 package com.porfolio.api.Dao;
 
-import com.porfolio.api.Models.Skill;
+import com.porfolio.api.Util.Models.Skill;
 
 import java.util.List;
 

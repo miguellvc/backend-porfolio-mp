@@ -1,6 +1,6 @@
 package com.porfolio.api.Dao;
 
-import com.porfolio.api.Models.Banner;
+import com.porfolio.api.Util.Models.Banner;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -1,5 +1,5 @@
 package com.porfolio.api.Dao;
-import com.porfolio.api.Models.User;
+import com.porfolio.api.Util.Models.User;
 
 import java.util.List;
 

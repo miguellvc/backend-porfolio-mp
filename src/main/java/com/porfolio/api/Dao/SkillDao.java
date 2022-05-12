@@ -1,6 +1,6 @@
 package com.porfolio.api.Dao;
 
-import com.porfolio.api.Models.Skill;
+import com.porfolio.api.Util.Models.Skill;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,10 +56,20 @@ public class SkillDao implements SkillInterfaceDao{
     @Override
     public boolean updateSkill(Skill skill) {
 
-        Skill newSkill = new Skill();
+        try{
 
-        newSkill.setId(skill.getId());
+            Skill newSkill = new Skill();
+            newSkill.setId(skill.getId());
+            newSkill.setLanguage(skill.getLanguage());
+            newSkill.setBackground(skill.getBackground());
+            newSkill.setBorder(skill.getBorder());
+            newSkill.setColor(skill.getColor());
+            newSkill.setRotate(skill.getRotate());
+            entityManager.merge(skill);
+            return true;
+        }catch (Exception e){
+            return false;
+        }
 
-        return false;
     }
 }

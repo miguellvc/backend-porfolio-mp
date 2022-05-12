@@ -1,7 +1,7 @@
 package com.porfolio.api.Dao;
 
 
-import com.porfolio.api.Models.User;
+import com.porfolio.api.Util.Models.User;
 import de.mkammerer.argon2.Argon2;
 import de.mkammerer.argon2.Argon2Factory;
 import org.springframework.stereotype.Repository;

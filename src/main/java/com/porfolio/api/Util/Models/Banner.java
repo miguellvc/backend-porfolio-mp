@@ -1,4 +1,4 @@
-package com.porfolio.api.Models;
+package com.porfolio.api.Util.Models;
 
 import lombok.Getter;
 import lombok.Setter;

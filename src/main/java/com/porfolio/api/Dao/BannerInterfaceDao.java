@@ -1,6 +1,6 @@
 package com.porfolio.api.Dao;
 
-import com.porfolio.api.Models.Banner;
+import com.porfolio.api.Util.Models.Banner;
 
 
 import java.util.List;

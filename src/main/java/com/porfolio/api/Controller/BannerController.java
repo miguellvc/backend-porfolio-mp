@@ -2,7 +2,7 @@ package com.porfolio.api.Controller;
 
 
 import com.porfolio.api.Dao.BannerInterfaceDao;
-import com.porfolio.api.Models.Banner;
+import com.porfolio.api.Util.Models.Banner;
 import com.porfolio.api.Util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

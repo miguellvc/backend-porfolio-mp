@@ -2,7 +2,7 @@ package com.porfolio.api.Controller;
 
 
 import com.porfolio.api.Dao.UserInterfaceDao;
-import com.porfolio.api.Models.User;
+import com.porfolio.api.Util.Models.User;
 import com.porfolio.api.Util.JWTUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
